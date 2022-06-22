@@ -1,0 +1,19 @@
+{% load news_tags %}
+<!-- teg -->
+{% show_categories %}
+
+<!-- any_name_category from templates->news_teg.py -->
+<!-- Comment -->
+{% comment 'Первый вариант верстки' %}
+<div class="list-group">
+  <a href="/" class="list-group-item list-group-item-action">Main</a>
+  {% any_name_category as categories%} {% for item in categories %}
+  <a
+    href="{% url 'category' item.pk %}"
+    class="list-group-item list-group-item-action"
+    >{{ item.title }}</a
+  >
+  {% endfor %}
+</div>
+{% endcomment %}
+<br />

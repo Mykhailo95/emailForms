@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'bcg_style/style.css' %}" />
+    <title>{% block title %} От base.html {% endblock %}</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    {% include 'incl/_nav.html' %}
+    <!-- Containet for Card -->
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-4">{% block sidebar %} SIDBAR {% endblock %}</div>
+        <!--  -->
+        <div class="col-md-8">
+          <!-- Для регистрации -->
+          {% if messages %}
+
+          <!-- выводит сообщение об операции регистрации успешное или нет -->
+          {% for message in messages %}
+
+          <!-- проверка по тегам ошибка  -->
+          {% if message.tags == 'error' %}
+          <div class="alert alert-danger" role="alert">{{ message }}</div>
+          <!-- если все хорошо -->
+          {% else %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+          </div>
+          {% endif %}
+
+          <!--  -->
+          {% endfor %}
+          <!--  -->
+          {% endif %}
+
+          <!--  -->
+          {% block content %} CONTENT {% endblock %}
+          <!-- Pagination -->
+          <!-- проверка если первая страница сод. меньше статьей которіе
+            біли указан б например ввыд по 15 новостей на страницеб
+            тогда нежно показывать погинацию первой страницы-->
+          {% if page_obj.has_other_pages %}
+          <nav aria-label="...">
+            <ul class="pagination">
+              <!-- Previous page -->
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="?page={{ page_obj.previous_page_number }}"
+                  >Previous</a
+                >
+              </li>
+              {% endif %}
+              <!-- цикл фор для определение стриницы -->
+              {% for p in page_obj.paginator.page_range %}
+
+              <!-- для подсвеч. текущей страницы у  page_obj есть фтриб. .number -->
+              {% if page_obj.number == p %}
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+              </li>
+
+              <!-- вывод только 2 вперед и 2 назад пагинатора -->
+              {% elif p > page_obj.number|add:-3 and page_obj.number|add:3 > p%}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+              </li>
+              {% endif %} {% endfor %}
+
+              <!-- Next page -->
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="?page={{ page_obj.next_page_number }}"
+                  >Next</a
+                >
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script
+      src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+mysite/settings.py ->
+    строка 157 -164
+
+news/urls.py
+    urlpatterns = [
+    # send_email
+        path('email/', form_email, name='email'),
+    ]
+
+news/forms.py
+    class ContactForm(forms.Form)
+
+news/views.py
+    строка 121
+    def form_email (request):
+
+html
+news/email.html
+
+
+http://127.0.0.1:8000/email/
+
+login: admin
+password: toor

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<!-- title Hовости :: News List -->
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
+<!-- categories -->
+{% block sidebar %}
+<!-- SIDBAR -->
+{% include 'incl/_sidbar.html' %}
+<!--  -->
+{% endblock %}
+
+<!-- news -->
+{% block content %}
+<!-- CONTENT -->
+{% include 'incl/_content.html' %}
+
+<!--  -->
+{% endblock %}

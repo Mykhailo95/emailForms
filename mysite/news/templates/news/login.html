@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+<!--регистрация -->
+{% block title %} Регистрация {% endblock %}
+
+<!-- список категорий -->
+{% block sidebar %}
+<!-- SIDBAR -->
+{% include 'incl/_sidbar.html' %} {% endblock %}
+
+<!-- форма регистрации -->
+{% block content %}
+<h1>Авторизация</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <!-- отобразит их в тегах <p> -->
+  {{form.as_p}}
+
+  <button type="submit" class="btn btn-primary btn-block">Авторизация</button>
+</form>
+
+{% endblock %}

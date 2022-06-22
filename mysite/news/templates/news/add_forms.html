@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+<!-- title Hовости :: News List -->
+{% block title %} Добовление Новости :: {{ block.super }} {% endblock %}
+
+<!-- categories -->
+{% block sidebar %}
+<!-- SIDBAR -->
+{% include 'incl/_sidbar.html' %}
+<!--  -->
+{% endblock %}
+
+<!-- news -->
+{% block content %}
+<h1>Добовление новости</h1>
+<form action="{% url 'add_news' %}" method="POST">
+  {% csrf_token %}
+  <!-- форма -->
+  {{ form.as_p }}
+
+  <!-- **************************************************************************************** -->
+  <!-- в ручную title -->
+  {% comment %}
+  <!-- для вывода ошибки  которые не связ. с видим. полями-->
+  {{ form.non_fiels.errors }}
+  <div class="form-group">
+    <label for="{{ form.title.id_for_lable }}" class="form-label"
+      >Название</label
+    >
+    {{ form.title }}
+    <!-- вывод оштбки валидации и назначение классов-->
+    <div class="invalid-feedback">{{ form.title.errors }}</div>
+  </div>
+
+  <!-- Content -->
+  <div class="form-group">
+    <label for="{{ form.content.id_for_lable }}" class="form-label"
+      >Тeкст</label
+    >
+    {{ form.content }}
+    <div class="invalid-feedback">{{ form.content.errors }}</div>
+  </div>
+
+  <!-- is_published  -->
+  <div class="form-group">
+    <label for="{{ form.is_published.id_for_lable }}" class="form-label"
+      >Oпублекованно</label
+    >
+    {{ form.is_published }}
+    <div class="invalid-feedback">{{ form.is_published.errors }}</div>
+  </div>
+
+  <!-- category  -->
+  <div class="form-group">
+    <label for="{{ form.category.id_for_lable }}" class="form-label"
+      >Выберете категорию</label
+    >
+    {{ form.category }}
+    <div class="invalid-feedback">{{ form.category.errors }}</div>
+  </div>
+  {% endcomment %}
+
+  <!-- третий вариант -->
+  {% comment %} {% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }} {{ field }}
+    <div class="invalid-feedback">{{ field.error }}</div>
+  </div>
+  {% endfor %} {% endcomment %}
+
+  <br />
+
+  <button type="submit" class="btn btn-primary btn-block">
+    Добавить Новость
+  </button>
+</form>
+{% endblock %}
